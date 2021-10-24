@@ -29,51 +29,34 @@ let mongoUrlDocker = "mongodb://admin:password@mongodb";
 // pass these options to mongo client connect request to avoid DeprecationWarning for current Server Discovery and Monitoring engine
 let mongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
-// "user-account" in demo with docker. "my-db" in demo with docker-compose
+//  "my-db"  with docker-compose
 let databaseName = "my-db";
 
+
+
 app.post('/update-profile', function (req, res) {
-  let userObj = req.body;
-
+  let userObj = req.body.numOfRows;
+  
   MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
-    userObj['userid'] = 1;
+   
 
-    let myquery = { userid: 1 };
-    let newvalues = { $set: userObj };
-
-    db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
-      if (err) throw err;
-      client.close();
-    });
-
-  });
-  // Send response
-  res.send(userObj);
-});
-
-app.get('/get-profile', function (req, res) {
-  let response = {};
-  // Connect to the db
-  MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+  db.collection("users").find().limit(userObj).toArray(function(err, result) {
     if (err) throw err;
-
-    let db = client.db(databaseName);
-
-    let myquery = { userid: 1 };
-
-    db.collection("users").findOne(myquery, function (err, result) {
-      if (err) throw err;
-      response = result;
-      client.close();
+    console.log(result);
+     response = result;
+     client.close();
 
       // Send response
-      res.send(response ? response : {});
-    });
+res.send(response ? response : {});
   });
 });
+});
+
+
+
 
 app.listen(3000, function () {
   console.log("app listening on port 3000!");

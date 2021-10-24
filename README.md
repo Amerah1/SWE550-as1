@@ -1,6 +1,6 @@
-## my-app - developing with Docker
+## user data app - developing with Docker
 
-This  app shows a simple user profile app set up using 
+This  app shows a simple user data app  using 
 - index.html with pure js and css styles
 - nodejs backend with express module
 - mongodb for data storage

@@ -42,14 +42,14 @@
 <script>
 
      async function handleUpdateRequest() {
-       // const contEdit = document.getElementById('container-edit');
+       
      const cont = document.getElementById('container');
      const myNode = document.getElementById('interests');
        myNode.innerHTML = '';
       const payload = {
            numOfRows:  parseInt(document.getElementById('input-rows').value)
            
-            //interests: document.getElementById('input-interests').value
+            
       };
         
         const response = await fetch('http://localhost:3000/update-profile', {
@@ -79,7 +79,7 @@
   
       
        cont.style.display = 'block';
-        //contEdit.style.display = 'none';
+        
     }
 
 
